@@ -21,8 +21,10 @@ public class ServerWorker implements Runnable{
 
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            bufferedWriter.write("----- Welcome to my server what is your name ? -----");
+            bufferedWriter.write("----- Welcome to my server what is your name ? ----- \n");
+            bufferedWriter.flush();
             clientName = bufferedReader.readLine();
+            System.out.println(clientName + " has entered the server");
             while (!socket.isClosed()) {
                 server.messageTreatment(bufferedReader.readLine(), socket);
             }
@@ -31,6 +33,7 @@ public class ServerWorker implements Runnable{
             throw new RuntimeException(e);
         }
     }
+
     public Socket getSocket() {
         return socket;
     }

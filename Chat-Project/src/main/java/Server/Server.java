@@ -15,7 +15,7 @@ public class Server {
     private ServerSocket serverSocket;
     private boolean serverOn = false;
     private ServerWorker serverWorker;
-    private ArrayList<ServerWorker> serverWorkerArrayList;
+    private ArrayList<ServerWorker> serverWorkerArrayList = new ArrayList<>();
     private ExecutorService fixedPool = Executors.newFixedThreadPool(30);
     private BufferedWriter bufferedWriter;
 
@@ -36,17 +36,12 @@ public class Server {
 
     public void messageTreatment(String message, Socket socket) {
         switch (message) {
-            case "/quit":
-                finishConnection(socket);
-                break;
-            case "/list":
-                listClients(socket);
-                break;
-            default:
-                sendMessageAll(message, socket);
-                break;
+            case "/quit" -> finishConnection(socket);
+            case "/list" -> listClients(socket);
+            default -> sendMessageAll(message, socket);
         }
     }
+
     private void finishConnection(Socket socket) {
         try {
             socket.close();
@@ -61,20 +56,18 @@ public class Server {
         try {
 
             bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            bufferedWriter.write("---------------");
+            bufferedWriter.write("---------------\n");
+            bufferedWriter.flush();
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 
         for (ServerWorker s : serverWorkerArrayList) {
-            if (s.getSocket() == socket) {
-                continue;
-            }
-
             try {
 
-                bufferedWriter.write(numberOfClients + " - " + s.getClientName());
+                bufferedWriter.write(numberOfClients + " - " + s.getClientName() + "\n");
+                bufferedWriter.flush();
                 numberOfClients++;
 
             }catch (IOException e) {
@@ -82,7 +75,8 @@ public class Server {
             }
         }
         try {
-            bufferedWriter.write("---------------");
+            bufferedWriter.write("---------------\n");
+            bufferedWriter.flush();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -91,9 +85,13 @@ public class Server {
     private void sendMessageAll(String message, Socket socket) {
 
         for (ServerWorker s : serverWorkerArrayList) {
+            if (s.getSocket() == socket) {
+                continue;
+            }
             try {
                 bufferedWriter = new BufferedWriter(new OutputStreamWriter(s.getSocket().getOutputStream()));
-                bufferedWriter.write(s.getClientName() + ": " + message);
+                bufferedWriter.write(s.getClientName() + ": " + message + "\n");
+                bufferedWriter.flush();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
