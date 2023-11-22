@@ -1,4 +1,4 @@
-package Server;
+package org.olavo.serverPackage;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

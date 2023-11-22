@@ -1,4 +1,4 @@
-package Client;
+package org.olavo.clientPackage;
 
 public class ClientMain {
     public static void main(String[] args) {

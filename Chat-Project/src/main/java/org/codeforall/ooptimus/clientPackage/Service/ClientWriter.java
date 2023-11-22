@@ -1,4 +1,4 @@
-package Client.Service;
+package org.olavo.clientPackage.Service;
 
 import java.io.*;
 import java.net.Socket;

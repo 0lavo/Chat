@@ -1,7 +1,7 @@
-package Client;
+package org.olavo.clientPackage;
 
-import Client.Service.ClientReader;
-import Client.Service.ClientWriter;
+import org.olavo.clientPackage.Service.ClientReader;
+import org.olavo.clientPackage.Service.ClientWriter;
 
 import java.io.*;
 import java.net.Socket;

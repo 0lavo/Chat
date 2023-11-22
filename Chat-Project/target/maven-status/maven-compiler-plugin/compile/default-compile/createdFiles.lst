@@ -1,0 +1,7 @@
+org/codeforall/ooptimus/serverPackage/Server.class
+org/codeforall/ooptimus/serverPackage/ServerWorker.class
+org/codeforall/ooptimus/clientPackage/Service/ClientWriter.class
+org/codeforall/ooptimus/clientPackage/ClientMain.class
+org/codeforall/ooptimus/clientPackage/Client.class
+org/codeforall/ooptimus/serverPackage/ServerMain.class
+org/codeforall/ooptimus/clientPackage/Service/ClientReader.class
