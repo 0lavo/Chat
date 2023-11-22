@@ -1,12 +1,18 @@
 package Client;
 
+import Client.Service.ClientReader;
+import Client.Service.ClientWriter;
+
 import java.io.*;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Client {
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     private BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
     private Socket socket;
+    private ExecutorService fixedPool = Executors.newFixedThreadPool(2);
 
     public void init() {
         try {
@@ -20,6 +26,8 @@ public class Client {
             Integer port = Integer.valueOf(bufferedReader.readLine());
 
             socket = new Socket(inetAddress,port);
+            fixedPool.submit(new ClientReader(socket));
+            fixedPool.submit(new ClientWriter(socket));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
