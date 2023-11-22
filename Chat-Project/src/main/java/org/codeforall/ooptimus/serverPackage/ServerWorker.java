@@ -1,4 +1,4 @@
-package org.olavo.serverPackage;
+package org.codeforall.ooptimus.serverPackage;
 
 import java.io.*;
 import java.net.Socket;
@@ -26,7 +26,7 @@ public class ServerWorker implements Runnable{
             clientName = bufferedReader.readLine();
             System.out.println(clientName + " has entered the server");
             while (!socket.isClosed()) {
-                server.messageTreatment(bufferedReader.readLine(), socket);
+                server.messageTreatment(bufferedReader.readLine(), socket, clientName);
             }
 
        } catch (IOException e) {

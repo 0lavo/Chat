@@ -1,4 +1,4 @@
-package org.olavo.clientPackage.Service;
+package org.codeforall.ooptimus.clientPackage.Service;
 
 import java.io.*;
 import java.net.Socket;
@@ -17,12 +17,13 @@ public class ClientWriter implements Runnable{
 
     @Override
     public void run() {
-        try {
-            bufferedWriter.write(bufferedReader.readLine() + "\n");
-            bufferedWriter.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        while (true) {
+            try {
+                bufferedWriter.write(bufferedReader.readLine() + "\n");
+                bufferedWriter.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package org.olavo.serverPackage;
+package org.codeforall.ooptimus.serverPackage;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -23,6 +23,7 @@ public class Server {
         serverOn = true;
         try {
             serverSocket = new ServerSocket(port);
+            System.out.println("Server on");
             while (serverOn) {
                 clientSocket = serverSocket.accept();
                 serverWorker = new ServerWorker(clientSocket, this);
@@ -34,11 +35,11 @@ public class Server {
         }
     }
 
-    public void messageTreatment(String message, Socket socket) {
+    public void messageTreatment(String message, Socket socket, String name) {
         switch (message) {
             case "/quit" -> finishConnection(socket);
             case "/list" -> listClients(socket);
-            default -> sendMessageAll(message, socket);
+            default -> sendMessageAll(message, socket, name);
         }
     }
 
@@ -82,7 +83,7 @@ public class Server {
         }
     }
 
-    private void sendMessageAll(String message, Socket socket) {
+    private void sendMessageAll(String message, Socket socket, String name) {
 
         for (ServerWorker s : serverWorkerArrayList) {
             if (s.getSocket() == socket) {
@@ -90,7 +91,7 @@ public class Server {
             }
             try {
                 bufferedWriter = new BufferedWriter(new OutputStreamWriter(s.getSocket().getOutputStream()));
-                bufferedWriter.write(s.getClientName() + ": " + message + "\n");
+                bufferedWriter.write(name + ": " + message + "\n");
                 bufferedWriter.flush();
             } catch (IOException e) {
                 System.out.println(e.getMessage());

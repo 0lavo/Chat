@@ -1,4 +1,4 @@
-package org.olavo.serverPackage;
+package org.codeforall.ooptimus.serverPackage;
 
 public class ServerMain {
     public static void main(String[] args) {
